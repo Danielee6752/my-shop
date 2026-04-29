@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Shop - 심플 커머스</title>
+  <style>
+    body { font-family: sans-serif; margin: 0; padding: 0; background: #f4f4f5; color: #333; }
+    header { background: #18181b; color: white; padding: 1.5rem; text-align: center; }
+    .container { max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+    .product { background: white; padding: 1.5rem; border-radius: 8px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+    button { background: #6366f1; color: white; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 10px; }
+    button:hover { background: #4f46e5; }
+    #subscribe-btn { background: #ec4899; width: auto; margin-bottom: 2rem; }
+    #subscribe-btn:hover { background: #db2777; }
+  </style>
+  
+  <script src="https://cdn.flarelane.com/WebSDK.js" charset="UTF-8"></script>
+</head>
+<body>
+
+  <header>
+    <h1>🛍️ My Shop</h1>
+    <p>신상품 업데이트를 가장 먼저 받아보세요!</p>
+  </header>
+
+  <div class="container">
+    <div style="text-align: center;">
+      <button id="subscribe-btn">🔔 특가 알림 구독하기</button>
+    </div>
+
+    <div class="product-grid">
+      <div class="product">
+        <div style="font-size: 4rem; margin-bottom: 1rem;">👕</div>
+        <h3>오버핏 베이직 반팔 티셔츠</h3>
+        <p style="color: #6366f1; font-weight: bold;">₩ 24,000</p>
+        <button onclick="alert('장바구니에 담겼습니다.')">장바구니 담기</button>
+      </div>
+      <div class="product">
+        <div style="font-size: 4rem; margin-bottom: 1rem;">👖</div>
+        <h3>와이드 데님 팬츠</h3>
+        <p style="color: #6366f1; font-weight: bold;">₩ 45,000</p>
+        <button onclick="alert('장바구니에 담겼습니다.')">장바구니 담기</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 1. 플레어레인 초기화
+    FlareLane.initialize({
+      projectId: "243f898b-ef62-4f32-b3a9-ebf2dd5630f1",
+      // 새 레포지토리 이름(my-shop)에 맞춘 서비스 워커 경로입니다.
+      serviceWorkerPath: "/my-shop/flarelane-worker.js" 
+    });
+
+    // 2. 알림 구독 버튼 클릭 이벤트
+    document.getElementById('subscribe-btn').addEventListener('click', function() {
+      FlareLane.setIsSubscribed(true, function(granted) {
+        if (granted) {
+          document.getElementById('subscribe-btn').innerText = '✓ 구독 완료 (특가 알림 대기중)';
+          document.getElementById('subscribe-btn').style.background = '#10b981';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
