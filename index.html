@@ -35,13 +35,13 @@
         <div style="font-size: 4rem; margin-bottom: 1rem;">👕</div>
         <h3>오버핏 베이직 반팔 티셔츠</h3>
         <p style="color: #6366f1; font-weight: bold;">₩ 24,000</p>
-        <button onclick="alert('장바구니에 담겼습니다.')">장바구니 담기</button>
+        <button onclick="addToCart('오버핏 베이직 반팔 티셔츠', 24000)">장바구니 담기</button>
       </div>
       <div class="product">
         <div style="font-size: 4rem; margin-bottom: 1rem;">👖</div>
         <h3>와이드 데님 팬츠</h3>
         <p style="color: #6366f1; font-weight: bold;">₩ 45,000</p>
-        <button onclick="alert('장바구니에 담겼습니다.')">장바구니 담기</button>
+        <button onclick="addToCart('와이드 데님 팬츠', 45000)">장바구니 담기</button>
       </div>
     </div>
   </div>
@@ -50,7 +50,6 @@
     // 1. 플레어레인 초기화
     FlareLane.initialize({
       projectId: "243f898b-ef62-4f32-b3a9-ebf2dd5630f1",
-      // 새 레포지토리 이름(my-shop)에 맞춘 서비스 워커 경로입니다.
       serviceWorkerPath: "/my-shop/flarelane-worker.js" 
     });
 
@@ -63,6 +62,20 @@
         }
       });
     });
+
+    // 3. 🎯 장바구니 담기 이벤트 연동 함수 (새로 추가된 부분)
+    function addToCart(productName, price) {
+      // (1) 사용자에게 보여줄 알림창
+      alert(productName + ' 상품이 장바구니에 담겼습니다.');
+
+      // (2) 플레어레인으로 이벤트 데이터 전송 (add_to_cart 이벤트)
+      FlareLane.trackEvent("add_to_cart", {
+        productName: productName,
+        amount: price
+      });
+      
+      console.log("[FlareLane] add_to_cart 이벤트 전송 완료:", productName);
+    }
   </script>
 </body>
 </html>
